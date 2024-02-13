@@ -1,6 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -8,11 +6,11 @@
 
 <f:loadBundle basename="resources.application" var="msg" />
 
-<head>
-<title><h:outputText value="#{msg.welcomeTitle}" /></title>
-</head>
+<h:head>
+	<title><h:outputText value="#{msg.welcomeTitle}" /></title>
+</h:head>
 
-<body>
+<h:body>
 	<h:outputText value="Application: #{applicationNumberBean.number}" />
 	<br />
 	<h:outputText value="Request: #{requestNumberBean.number}" />
@@ -25,5 +23,17 @@
 			<f:actionListener binding="#{sessionNumberBean.increase()}" />
 		</h:commandButton>
 	</h:form>
-</body>
+
+	<h:dataTable value="#{userBean.allUsers}" var="user">
+		<h:column>
+			<f:facet name="header">Index</f:facet>
+			<h:outputText value="#{user.id}" />
+		</h:column>
+
+		<h:column>
+			<f:facet name="header">Username</f:facet>
+			<h:outputText value="#{user.username}" />
+		</h:column>
+	</h:dataTable>
+</h:body>
 </html>
