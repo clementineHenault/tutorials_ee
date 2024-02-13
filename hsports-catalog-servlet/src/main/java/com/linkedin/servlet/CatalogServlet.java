@@ -3,6 +3,7 @@ package com.linkedin.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class CatalogServlet
  */
-@WebServlet("/CatalogServlet")
+@WebServlet(urlPatterns= "/CatalogServlet", asyncSupported = true)
 public class CatalogServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,7 +36,38 @@ public class CatalogServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+		// Deal with async / threads: 
+		AsyncContext asyncContext = request.startAsync();
+		
+		// Start a new thread to respond to the request
+		asyncContext.start(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(5000);
+					System.out.println("Printing the response");
+					System.out.println("Response returned by: " + Thread.currentThread().getName());
+					// Set and send the response
+					returnResponse(request, response);
+					// Mark complete -> cause the response to be returned back to the browser
+					asyncContext.complete();
+					
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		System.out.println("Inital request: " + Thread.currentThread().getName());
+	}
+
+	private void returnResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// Get the information sent in the form (from form.html)
 		String name = request.getParameter("name");
 		String manufacturer = request.getParameter("manufacturer");
@@ -72,7 +104,6 @@ public class CatalogServlet extends HttpServlet {
 		out.println("</body>");
 		out.println("</head>");
 		out.println("</html>");
-		
 	}
 
 }
