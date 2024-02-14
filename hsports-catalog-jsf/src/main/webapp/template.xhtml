@@ -5,7 +5,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html">
 
 <f:loadBundle basename="resources.messages" var="msg" />
-<head>
+<h:head>
 <title><ui:insert name="pageTitle">Page Title</ui:insert></title>
 <style type="text/css">
 body {
@@ -26,7 +26,8 @@ body {
 	color: #8E969D;
 }
 </style>
-</head>
+	<h:outputStylesheet library="css" name="global.css"></h:outputStylesheet> <!-- css = directory, global.css = name of the css file inside said directory -->
+</h:head>
 
 <body bgcolor="#ffffff">
 	<table style="border: 1px solid #CAD6E0" align="center" cellpadding="0"
@@ -47,6 +48,9 @@ body {
 					<table width="100%" style="height: 150px" align="left"
 						cellpadding="0" cellspacing="0" border="0">
 						<tbody>
+							<tr>
+								<td><h:graphicImage library="img" value="/resources/img/banner.jpeg"/></td> <!-- img = subdirectory within the resources folder-->
+							</tr>
 							<tr>
 								<td align="center" width="100%" valign="middle"><ui:insert
 										name="body">Page Body</ui:insert></td>
