@@ -1,30 +1,42 @@
 package com.linkedin.jsf;
 
-import javax.enterprise.context.RequestScoped;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-@RequestScoped
+@SessionScoped
 @Named
-public class CatalogItemFormBean {
-	private String name;
-	private String manufacturer;
-	private String sku;
-	public String getName() {
-		return name;
+public class CatalogItemFormBean implements Serializable{
+	private CatalogItem item = new CatalogItem();
+	private List<CatalogItem> items = new ArrayList<>();
+	
+	public String addItem() {
+		long itemId = this.items.size() + 1;
+		
+		this.items.add(new CatalogItem(itemId, this.item.getName(), this.item.getManufacturer(), this.item.getDescription(), this.item.getAvailableDate()));
+		
+		// To see what's in the collection
+		this.items.stream().forEach(item -> {
+			System.out.println(item.toString());
+		});
+		
+		// Redirection
+		return "list?faces-redirect=true"; // The name of the facelet we navigate to once this method's logic is executed 
 	}
-	public void setName(String name) {
-		this.name = name;
+	
+	public CatalogItem getItem() {
+		return item;
 	}
-	public String getManufacturer() {
-		return manufacturer;
+	public void setItem(CatalogItem item) {
+		this.item = item;
 	}
-	public void setManufacturer(String manufacturer) {
-		this.manufacturer = manufacturer;
+	public List<CatalogItem> getItems() {
+		return items;
 	}
-	public String getSku() {
-		return sku;
-	}
-	public void setSku(String sku) {
-		this.sku = sku;
+	public void setItems(List<CatalogItem> items) {
+		this.items = items;
 	}
 }
