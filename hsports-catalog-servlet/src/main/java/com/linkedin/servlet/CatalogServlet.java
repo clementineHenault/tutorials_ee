@@ -50,8 +50,8 @@ public class CatalogServlet extends HttpServlet {
 		response.setHeader("someHeader", "someHeaderValue");
 		response.addCookie(new Cookie("someCookie", "someCookieValue"));
 		
-		// Set an attribute on the request (to access it in the jsp)
-		request.setAttribute("message", name);
+		// Set the list of items in the catalogue as an attribute on the request (to access it in the jsp)
+		request.setAttribute("items", Catalog.getItems());
 		
 		// Forward the request to our jsp for further processing
 		RequestDispatcher dispatcher = request.getRequestDispatcher("list.jsp");
