@@ -1,5 +1,10 @@
-package com.placement;
+package com.placement.model;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
+
+@ApplicationScoped
+@Named
 public class Employee {
 
 	private String firstName;
@@ -8,8 +13,22 @@ public class Employee {
     private String password;
     private String address;
     private String contact;
+    
+    public Employee(String firstName, String lastName, String userName, String password, String address, String contact) {
+		
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = userName;
+		this.password = password;
+		this.address = address;
+		this.contact = contact;
+	}
 	
-    public String getFirstName() {
+    public Employee() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getFirstName() {
 		return firstName;
 	}
 	public void setFirstName(String firstName) {

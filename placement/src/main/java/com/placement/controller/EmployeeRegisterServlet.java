@@ -1,7 +1,4 @@
-package com.placement;
-
-import com.placement.Employee;
-import com.placement.EmployeeDAO;
+package com.placement.controller;
 
 import java.io.IOException;
 
@@ -12,11 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.placement.dao.EmployeeDAO;
+import com.placement.model.Employee;
+
 /**
  * Servlet implementation class EmployeServlet
  */
 @WebServlet("/register")
-public class EmployeeServlet extends HttpServlet {
+public class EmployeeRegisterServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
        
@@ -24,7 +24,7 @@ public class EmployeeServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EmployeeServlet() {
+    public EmployeeRegisterServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -67,7 +67,7 @@ public class EmployeeServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        response.sendRedirect("employeedetails.jsp");
+        response.sendRedirect("views/employeedetails.jsp");
 	}
 
 }

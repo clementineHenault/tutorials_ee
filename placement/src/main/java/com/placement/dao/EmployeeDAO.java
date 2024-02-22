@@ -1,15 +1,31 @@
-package com.placement;
+package com.placement.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import com.placement.model.Employee;
 
 
 //import com.placements.Employee;
 
 public class EmployeeDAO {
 
+	public static Connection getConnection() {
+
+	    Connection connection = null;
+	    try {
+	      //Class.forName("com.mysql.jdbc.Driver");
+	      connection = DriverManager.getConnection(
+	    		  "jdbc:mysql://localhost:3306/employees", "root", "root");
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    }
+	    return connection;
+	}
+	
 	public int registerEmployee(Employee employee) throws ClassNotFoundException {
         
 		//Create the MySQL statement for inserting the employee
@@ -19,9 +35,7 @@ public class EmployeeDAO {
 
         int result = 0;
 
-        //Class.forName("com.mysql.jdbc.Driver");
-
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/employees", "root", "root");
+        try (Connection connection = getConnection();
 
             // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
@@ -43,6 +57,25 @@ public class EmployeeDAO {
         }
         return result;
     }
+	
+	public static Employee checkLogin(String userName, String password) {
+	    
+		Connection connection = getConnection();
+	    Employee employee = null ;
+
+	    try {
+	      PreparedStatement psmt = connection.prepareStatement("SELECT * FROM employee WHERE username = ? AND passwrd = ?");
+	      psmt.setString(1, userName);
+	      psmt.setString(2, password);
+	      ResultSet rs = psmt.executeQuery();
+	      if (rs.next()) {
+	        employee = new Employee(rs.getString("first_Name"), rs.getString("last_Name"), rs.getString("userName"), rs.getString("passwrd"), rs.getString("address"), rs.getString("contact"));
+	      }
+	    } catch (SQLException e) {
+	      e.printStackTrace();
+	    }
+	    return employee;
+	  }
 	
 	private void printSQLException(SQLException ex) {
         for (Throwable e: ex) {

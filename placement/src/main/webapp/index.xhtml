@@ -1,18 +1,18 @@
-<!DOCTYPE html>
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"> 
 
-<f:loadBundle basename="resources.application" var="msg"/>
+<h:head align="center">Welcome to the Carty Meats Web site</h:head> 
 
-<head>
-    <title><h:outputText value="#{msg.welcomeTitle}" /></title>
-</head>
+<body> 
+	<br></br>
+	<h:outputText>Select Options:</h:outputText>
+	<br></br>
+	<a href="views/employeeregister.jsp">Register</a>
+	<br></br>
+	<a href="views/employeelogin.jsp">Login</a>
+</body> 
 
-<body>
-<h3><h:outputText value="#{msg.welcomeHeading}" /></h3>
-<p><h:outputText value="#{msg.welcomeMessage}" /></p>
-</body>
 </html>
